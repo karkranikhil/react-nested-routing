@@ -1,24 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import {BrowserRouter as Router,Switch,Route} from "react-router-dom";
+import {HeroNamesisPage, MainPage, HeroBioPage} from './Pages';
+import data from './data/db.json'
+import HeroContext from './Contexts'
+function App(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <HeroContext.Provider value={data}>
+      <Router>
+        <div className="container pt-5">
+          <Switch>
+            <Route exact path="/" component={MainPage} {...props} />
+            <Route exact path="/:heroname" component={HeroNamesisPage} {...props} />
+            <Route exact path="/:heroname/nemesis/:nemesisname" component={HeroBioPage} {...props} />
+          </Switch>
+        </div>
+      </Router>
+    </HeroContext.Provider>
+    
   );
 }
 
